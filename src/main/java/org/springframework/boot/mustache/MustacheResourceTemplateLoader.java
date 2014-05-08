@@ -39,7 +39,7 @@ import com.samskivert.mustache.Mustache.TemplateLoader;
  * @author Dave Syer
  *
  */
-public class SpringTemplateLoader implements TemplateLoader, ResourceLoaderAware {
+public class MustacheResourceTemplateLoader implements TemplateLoader, ResourceLoaderAware {
 
 	private String prefix = "";
 
@@ -49,10 +49,10 @@ public class SpringTemplateLoader implements TemplateLoader, ResourceLoaderAware
 
 	private ResourceLoader resourceLoader = new DefaultResourceLoader();
 	
-	public SpringTemplateLoader() {
+	public MustacheResourceTemplateLoader() {
 	}
 
-	public SpringTemplateLoader(String prefix, String suffix) {
+	public MustacheResourceTemplateLoader(String prefix, String suffix) {
 		super();
 		this.prefix = prefix;
 		this.suffix = suffix;

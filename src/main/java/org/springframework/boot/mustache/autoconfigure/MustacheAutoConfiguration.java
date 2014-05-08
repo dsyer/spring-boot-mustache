@@ -20,13 +20,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.mustache.SpringTemplateLoader;
+import org.springframework.boot.mustache.MustacheEnvironmentCollector;
+import org.springframework.boot.mustache.MustacheResourceTemplateLoader;
 import org.springframework.boot.mustache.web.MustacheViewResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.core.env.Environment;
 
 import com.samskivert.mustache.Mustache;
+import com.samskivert.mustache.Mustache.Collector;
 import com.samskivert.mustache.Mustache.Compiler;
 import com.samskivert.mustache.Mustache.TemplateLoader;
 
@@ -42,16 +45,25 @@ public class MustacheAutoConfiguration {
 	@Autowired
 	private MustacheProperties mustache;
 	
+	@Autowired
+	private Environment environment;
+	
 	@Bean
 	@ConditionalOnMissingBean(Mustache.Compiler.class)
 	public Mustache.Compiler mustacheCompiler(TemplateLoader mustacheTemplateLoader) {
-		return Mustache.compiler().withLoader(mustacheTemplateLoader);
+		return Mustache.compiler().withLoader(mustacheTemplateLoader).withCollector(collector());
+	}
+
+	private Collector collector() {
+		MustacheEnvironmentCollector collector = new MustacheEnvironmentCollector();
+		collector.setEnvironment(environment);
+		return collector;
 	}
 
 	@Bean
 	@ConditionalOnMissingBean(TemplateLoader.class)
-	public SpringTemplateLoader mustacheTemplateLoader() {
-		SpringTemplateLoader loader = new SpringTemplateLoader(mustache.getPrefix(), mustache.getSuffix());
+	public MustacheResourceTemplateLoader mustacheTemplateLoader() {
+		MustacheResourceTemplateLoader loader = new MustacheResourceTemplateLoader(mustache.getPrefix(), mustache.getSuffix());
 		loader.setCharSet(mustache.getCharSet());
 		return loader;
 	}

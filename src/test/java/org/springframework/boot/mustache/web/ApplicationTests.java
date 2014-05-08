@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
-import org.springframework.boot.mustache.SpringTemplateLoader;
+import org.springframework.boot.mustache.MustacheResourceTemplateLoader;
 import org.springframework.boot.mustache.autoconfigure.MustacheAutoConfiguration;
 import org.springframework.boot.mustache.web.ApplicationTests.Application;
 import org.springframework.boot.test.IntegrationTest;
@@ -95,7 +95,7 @@ public class ApplicationTests {
 			resolver.setPrefix("classpath:/templates/");
 			resolver.setSuffix(".html");
 			resolver.setCompiler(Mustache.compiler().withLoader(
-					new SpringTemplateLoader("classpath:/templates/", ".html")));
+					new MustacheResourceTemplateLoader("classpath:/templates/", ".html")));
 			return resolver;
 		}
 

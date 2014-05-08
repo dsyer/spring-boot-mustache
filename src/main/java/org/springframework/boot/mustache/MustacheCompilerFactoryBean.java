@@ -30,7 +30,7 @@ import com.samskivert.mustache.Mustache.TemplateLoader;
  * <code>@Bean</code> definition in Java it probably doesn't help to use this factory
  * since the underlying fluent API is actually richer.
  * 
- * @see SpringTemplateLoader
+ * @see MustacheResourceTemplateLoader
  * 
  * @author Dave Syer
  *
