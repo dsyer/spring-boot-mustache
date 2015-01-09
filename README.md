@@ -1,3 +1,5 @@
+> Note: this code has moved to Spring Boot as of 1.2.2
+
 Spring Boot autoconfig support for JMustache (logic-less
 handlebar style templates).
 
